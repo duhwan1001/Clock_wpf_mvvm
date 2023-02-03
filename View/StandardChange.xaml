@@ -1,0 +1,25 @@
+﻿<Window x:Class="VewModelSample.View.StandardChange"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VewModelSample.View"
+        xmlns:viewModel="clr-namespace:VewModelSample.ViewModel"
+        mc:Ignorable="d"
+        Title="StandardChange" Height="450" Width="800">
+    <Window.DataContext>
+        <viewModel:ClockViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="224,177,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="ko-kr" Text="표준 시간대"/></TextBlock>
+        <ComboBox SelectedIndex="{Binding StandardChangeIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="394">
+            <ComboBoxItem Content="KST(UTC+9)" />
+            <ComboBoxItem Content="UTC(UTC+0)" />
+            <ComboBoxItem Content="PST(UTC-8)" />
+        </ComboBox>
+        <TextBlock HorizontalAlignment="Left" Margin="224,275,0,0" TextWrapping="Wrap" Text="출력 날짜 및 시간 :" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="340,275,0,0" TextWrapping="Wrap" Text="{Binding StandardChangeView, Mode=TwoWay}" VerticalAlignment="Top"/>
+        <Button Command="{Binding StandardChangeConfirm, UpdateSourceTrigger=PropertyChanged}" Content="확인" HorizontalAlignment="Left" Margin="542,394,0,0" VerticalAlignment="Top" Width="113"/>
+        <Button Command="{Binding CloseWindowCommand, UpdateSourceTrigger=PropertyChanged}" Content="취소" HorizontalAlignment="Left" Margin="672,394,0,0" VerticalAlignment="Top" Width="113"/>
+    </Grid>
+</Window>
