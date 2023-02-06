@@ -17,20 +17,6 @@ namespace VewModelSample.ViewModel
 {
     class BaseUserControlViewModel : INotifyPropertyChanged
     {
-        // 모델 사용할 때
-        //private Model.BaseUserControlModel model = null;
-
-        //public BaseUserControlViewModel()
-        //{
-        //    model = new Model.BaseUserControlModel();
-        //}
-
-        //public Model.BaseUserControlModel Model
-        //{
-        //    get { return model; }
-        //    set { model = value; OnPropertyChanged("Model");
-        //}
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged(string prop)
