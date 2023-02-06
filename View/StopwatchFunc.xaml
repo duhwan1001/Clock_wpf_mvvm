@@ -4,8 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VewModelSample.View"
+        xmlns:viewModel="clr-namespace:VewModelSample.ViewModel"
         mc:Ignorable="d"
         Title="StopwatchFunc" Height="450" Width="800">
+    <!--<Window.DataContext>
+        <viewModel:StopwatchViewModel/>
+    </Window.DataContext>-->
     <Grid>
         <TextBlock HorizontalAlignment="Center" Margin="0,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="64"><Run Language="ko-kr" Text="{Binding StopWatch}"/></TextBlock>
         <DataGrid ItemsSource="{Binding Path=alarmDatas, Mode=TwoWay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" Margin="270,126,270,92" AutoGenerateColumns="False" CanUserAddRows="False">

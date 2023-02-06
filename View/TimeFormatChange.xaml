@@ -7,9 +7,9 @@
         xmlns:viewModel="clr-namespace:VewModelSample.ViewModel"
         mc:Ignorable="d"
         Title="TimeFormatChange" Height="450" Width="800">
-    <Window.DataContext>
-        <viewModel:ClockViewModel/>
-    </Window.DataContext>
+    <!--<Window.DataContext>
+        <viewModel:TimeFormatChangeViewModel/>
+    </Window.DataContext>-->
     <Grid>
         <Grid HorizontalAlignment="Center" Height="223" VerticalAlignment="Center" Width="288">
             <TextBlock HorizontalAlignment="Left" Margin="0,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="ko-kr" Text="날짜"/></TextBlock>

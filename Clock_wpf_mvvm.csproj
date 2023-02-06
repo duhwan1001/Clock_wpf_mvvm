@@ -64,10 +64,16 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\ClockModel.cs" />
+    <None Include="ViewModel\AlarmViewModel.cs" />
     <Compile Include="ViewModel\BaseUserControlViewModel.cs" />
+    <None Include="ViewModel\ChangeTimeViewModel.cs" />
     <Compile Include="ViewModel\ClockViewModel.cs" />
     <Compile Include="ViewModel\Command\RelayCommand.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
+    <None Include="ViewModel\MainViewModel.cs" />
+    <None Include="ViewModel\StandardChangeViewModel.cs" />
+    <None Include="ViewModel\StopwatchViewModel.cs" />
+    <None Include="ViewModel\TimeFormatChangeViewModel.cs" />
+    <None Include="ViewModel\ViewLogViewModel.cs" />
     <Compile Include="View\BaseUserControl.xaml.cs">
       <DependentUpon>BaseUserControl.xaml</DependentUpon>
     </Compile>
@@ -159,6 +165,14 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="images\1097EC8B9CEAB384EBB094EB8A98.jpg" />
+    <Resource Include="images\hourhand.png" />
+    <Resource Include="images\minhand.png" />
+    <Resource Include="images\sechand.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\clockFrame.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -4,10 +4,12 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using System.Timers;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 using VewModelSample.Model;
 using VewModelSample.ViewModel.Command;
 using static VewModelSample.Model.ClockModel;
@@ -63,7 +65,6 @@ namespace VewModelSample.ViewModel
                 StandardChangeView = DateTime.UtcNow.Subtract(new TimeSpan(8, 0, 0)).ToString(StandardChangeViewFormat);
             }
 
-
             TemporaryDateFormat = DateFormat;
             TemporaryTimeFormat = TimeFormat;
 
@@ -72,6 +73,24 @@ namespace VewModelSample.ViewModel
             RefreshThread.Start();
             RefreshThread.Name = nameof(Refresh);
 
+        }
+
+        public double HourAngle
+        {
+            get { return clockModel.hourAngle; }
+            set { clockModel.hourAngle = value; OnPropertyChanged("HourAngle"); }
+        }
+    
+        public int MinAngle
+        {
+            get { return clockModel.minAngle; }
+            set { clockModel.minAngle = value; OnPropertyChanged("MinAngle"); }
+        }
+    
+        public int SecAngle
+        {
+            get { return clockModel.secAngle; }
+            set { clockModel.secAngle = value; OnPropertyChanged("SecAngle"); }
         }
 
         // Refresh Thread
@@ -92,6 +111,10 @@ namespace VewModelSample.ViewModel
                 {
                     Standard = DateTime.UtcNow;
                 }
+
+                SecAngle = Standard.Second * 6;
+                MinAngle = Standard.Minute * 6;
+                HourAngle = (Standard.Hour * 30) + (Standard.Minute * 0.5);
 
                 // Clock
                 ViewCurrentDate = Standard.ToString(DateFormat);
@@ -115,14 +138,6 @@ namespace VewModelSample.ViewModel
             get { return clockModel.timeMode; }
             set { clockModel.timeMode = value; OnPropertyChanged("TimeMode"); }
         }
-
-        #region ClockView -------------------------------------------------------------------------------------------------
-
-
-
-
-
-        #endregion
 
         #region ChangeTimeSection -----------------------------------------------------------------------------------------------
 

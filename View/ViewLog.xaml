@@ -7,9 +7,9 @@
         xmlns:viewModel="clr-namespace:VewModelSample.ViewModel"
         mc:Ignorable="d"
         Title="ViewLog" Height="450" Width="800">
-    <Window.DataContext>
-        <viewModel:ClockViewModel/>
-    </Window.DataContext>
+    <!--<Window.DataContext>
+        <viewModel:ViewLogViewModel/>
+    </Window.DataContext>-->
     <Grid>
         <DataGrid ItemsSource="{Binding Path=logDatas, Mode=TwoWay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>

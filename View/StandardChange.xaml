@@ -7,9 +7,9 @@
         xmlns:viewModel="clr-namespace:VewModelSample.ViewModel"
         mc:Ignorable="d"
         Title="StandardChange" Height="450" Width="800">
-    <Window.DataContext>
-        <viewModel:ClockViewModel/>
-    </Window.DataContext>
+    <!--<Window.DataContext>
+        <viewModel:StandardChangeViewModel/>
+    </Window.DataContext>-->
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="224,177,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="ko-kr" Text="표준 시간대"/></TextBlock>
         <ComboBox SelectedIndex="{Binding StandardChangeIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="394">

@@ -4,15 +4,15 @@
 winexe
 C#
 .cs
-C:\Users\user\source\repos\VewModelSampleCus\obj\Release\
+C:\Users\user\source\repos\Clock_wpf_mvvm\obj\Release\
 VewModelSample
 none
 false
 TRACE
-C:\Users\user\source\repos\VewModelSampleCus\App.xaml
+C:\Users\user\source\repos\Clock_wpf_mvvm\App.xaml
 9-772517843
 
-18-483518840
+17-1223087249
 171157170242
 MainWindow.xaml;View\BaseUserControl.xaml;View\ChangeTime.xaml;View\ClockFunc.xaml;View\SetAlarm.xaml;View\StandardChange.xaml;View\StopwatchFunc.xaml;View\TimeFormatChange.xaml;View\ViewLog.xaml;
 

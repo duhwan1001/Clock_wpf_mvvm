@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using VewModelSample.ViewModel;
 using VewModelSample.ViewModel.Command;
 
@@ -14,6 +15,12 @@ namespace VewModelSample.Model
 {
     public class ClockModel
     {
+        private static ClockModel _instance = new ClockModel();
+        public static ClockModel Instance
+        {
+            get { return _instance; }
+        }
+
         public int timeMode = 0;
         public DateTime standard;
 
@@ -26,8 +33,28 @@ namespace VewModelSample.Model
         public int minHand;
         public int secHand;
 
+        public double hourX;
+        public double hourY;
+        public double minX;
+        public double minY;
+        public double secX;
+        public double secY;
 
+        public double hourAngle;
+        public int minAngle;
+        public int secAngle;
 
+        // ClockFrame
+        public class clockFrame
+        {
+            public double fX1;
+            public double fY1;
+            public double fX2;
+            public double fY2;
+            public SolidColorBrush fStrokeColor;
+            public int fStrokeThickness;
+            public Thickness fThickness;
+        }
         // ChangeTime
         public int timeSelectIndex = 0;
         public String timeSelectFormat;
@@ -84,6 +111,8 @@ namespace VewModelSample.Model
 
         // log
         public int logSequence = 0;
+        
+
         public class dataGridData
         {
             public int dataGridSequence { get; set; }

@@ -15,7 +15,6 @@ namespace VewModelSample.View
         public BaseUserControl()
         {
             InitializeComponent();
-            //this.DataContext = new BaseUserControlViewModel();
         }
     }
 }
