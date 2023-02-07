@@ -15,12 +15,6 @@ namespace VewModelSample.Model
 {
     public class ClockModel
     {
-        private static ClockModel _instance = new ClockModel();
-        public static ClockModel Instance
-        {
-            get { return _instance; }
-        }
-
         public int timeMode = 0;
         public DateTime standard;
 
@@ -112,7 +106,6 @@ namespace VewModelSample.Model
         // log
         public int logSequence = 0;
         
-
         public class dataGridData
         {
             public int dataGridSequence { get; set; }

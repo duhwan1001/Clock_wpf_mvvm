@@ -64,6 +64,8 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\ClockModel.cs" />
+    <Resource Include="Fonts\NotoSansKR-Regular.otf" />
+    <Resource Include="Fonts\GowunDodum-Regular.ttf" />
     <None Include="ViewModel\AlarmViewModel.cs" />
     <Compile Include="ViewModel\BaseUserControlViewModel.cs" />
     <None Include="ViewModel\ChangeTimeViewModel.cs" />
@@ -105,6 +107,22 @@
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\buttonHover.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\CalenderStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\MainPageButtonFontChange.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\TextBoxWatermark.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\BaseUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>

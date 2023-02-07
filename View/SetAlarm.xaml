@@ -6,35 +6,61 @@
         xmlns:local="clr-namespace:VewModelSample.View"
         xmlns:viewModel="clr-namespace:VewModelSample.ViewModel"
         mc:Ignorable="d"
-        Title="SetAlarm" Height="450" Width="800">
+        ResizeMode="NoResize"
+        Title="알람 설정" Height="480" Width="600">
     <!--<Window.DataContext>
         <viewModel:AlarmViewModel/>
     </Window.DataContext>-->
     <Grid>
-        <Calendar SelectedDate="{Binding Path=SelectedDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="113,74,488,166"/>
-        <ComboBox SelectedIndex="{Binding TimeSelectIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="86,287,0,0" VerticalAlignment="Top" Width="58">
-            <ComboBoxItem Content="오전" />
-            <ComboBoxItem Content="오후" />
-        </ComboBox>
-        <TextBox HorizontalAlignment="Left" Margin="149,289,0,0" TextWrapping="Wrap" Text="{Binding Path=GetHour, Mode=TwoWay}" VerticalAlignment="Top" Width="60"/>
-        <TextBox HorizontalAlignment="Left" Margin="214,289,0,0" TextWrapping="Wrap" Text="{Binding Path=GetMin, Mode=TwoWay}" VerticalAlignment="Top" Width="60"/>
-        <TextBox HorizontalAlignment="Left" Margin="279,289,0,0" TextWrapping="Wrap" Text="{Binding Path=GetSec, Mode=TwoWay}" VerticalAlignment="Top" Width="60"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        
+        <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="3">
+            <Calendar Style="{DynamicResource styleCalendar}" SelectedDate="{Binding Path=SelectedDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
+        <Grid Grid.Column="0" Grid.Row="3">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <ComboBox SelectedIndex="{Binding TimeSelectIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="58">
+                    <ComboBoxItem Content="오전" />
+                    <ComboBoxItem Content="오후" />
+                </ComboBox>
+                <TextBox Style="{DynamicResource MyWaterMarkStyle}" Tag="시" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Path=GetHour, Mode=TwoWay}" VerticalAlignment="Center" Width="60" Height="22"/>
+                <TextBox Style="{DynamicResource MyWaterMarkStyle}" Tag="분" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Path=GetMin, Mode=TwoWay}" VerticalAlignment="Center" Width="60" Height="22"/>
+                <TextBox Style="{DynamicResource MyWaterMarkStyle}" Tag="초" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Path=GetSec, Mode=TwoWay}" VerticalAlignment="Center" Width="60" Height="22"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Column="1" Grid.RowSpan="5">
+            <DataGrid ItemsSource="{Binding Path=alarmDatas, Mode=TwoWay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" AutoGenerateColumns="False" CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Sequence" MinWidth="10" Width="Auto" Binding="{Binding Path=alarmSequence}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="TargetTime" MinWidth="10" Width="Auto" Binding="{Binding Path=targetTime}"></DataGridTextColumn>
+                    <DataGridTemplateColumn Header="Remove">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Delete" Command="{Binding RemoveCommand, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Grid Grid.Column="0" Grid.Row="5">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Command="{Binding AddAlarmConfirm, UpdateSourceTrigger=PropertyChanged}" Content="알람 추가" HorizontalAlignment="Center" VerticalAlignment="Center" Width="113"/>
+                <Button Command="{Binding CloseThisWindow, UpdateSourceTrigger=PropertyChanged}" Content="닫기" HorizontalAlignment="Center" VerticalAlignment="Center" Width="113" Margin="10,0,0,0"/>
+            </StackPanel>
+        </Grid>
 
-        <DataGrid ItemsSource="{Binding Path=alarmDatas, Mode=TwoWay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" Margin="362,44,33,70" AutoGenerateColumns="False" CanUserAddRows="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Sequence" MinWidth="10" Width="Auto" Binding="{Binding Path=alarmSequence}"></DataGridTextColumn>
-                <DataGridTextColumn Header="TargetTime" MinWidth="10" Width="Auto" Binding="{Binding Path=targetTime}"></DataGridTextColumn>
-                <DataGridTemplateColumn Header="Remove">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button Content="Delete" Command="{Binding RemoveCommand, UpdateSourceTrigger=PropertyChanged}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>
        
 
-        <Button Command="{Binding AddAlarmConfirm, UpdateSourceTrigger=PropertyChanged}" Content="알람 추가" HorizontalAlignment="Left" Margin="156,333,0,0" VerticalAlignment="Top" Width="113"/>
     </Grid>
 </Window>

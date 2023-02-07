@@ -72,25 +72,6 @@ namespace VewModelSample.ViewModel
             RefreshThread.IsBackground = true;
             RefreshThread.Start();
             RefreshThread.Name = nameof(Refresh);
-
-        }
-
-        public double HourAngle
-        {
-            get { return clockModel.hourAngle; }
-            set { clockModel.hourAngle = value; OnPropertyChanged("HourAngle"); }
-        }
-    
-        public int MinAngle
-        {
-            get { return clockModel.minAngle; }
-            set { clockModel.minAngle = value; OnPropertyChanged("MinAngle"); }
-        }
-    
-        public int SecAngle
-        {
-            get { return clockModel.secAngle; }
-            set { clockModel.secAngle = value; OnPropertyChanged("SecAngle"); }
         }
 
         // Refresh Thread
@@ -124,6 +105,24 @@ namespace VewModelSample.ViewModel
                 ViewTemporaryDate = Standard.ToString(TemporaryDateFormat);
                 ViewTemporaryTime = Standard.ToString(TemporaryTimeFormat);
             }
+        }
+
+        public double HourAngle
+        {
+            get { return clockModel.hourAngle; }
+            set { clockModel.hourAngle = value; OnPropertyChanged("HourAngle"); }
+        }
+    
+        public int MinAngle
+        {
+            get { return clockModel.minAngle; }
+            set { clockModel.minAngle = value; OnPropertyChanged("MinAngle"); }
+        }
+    
+        public int SecAngle
+        {
+            get { return clockModel.secAngle; }
+            set { clockModel.secAngle = value; OnPropertyChanged("SecAngle"); }
         }
 
         // 기준

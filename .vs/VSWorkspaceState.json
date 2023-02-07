@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\View",
-    "\\ViewModel"
+    "\\ViewModel",
+    "\\ViewModel\\Command"
   ],
-  "SelectedNode": "\\View\\SetAlarm.xaml",
+  "SelectedNode": "\\Clock_wpf_mvvm.sln",
   "PreviewInSolutionExplorer": false
 }

@@ -6,16 +6,20 @@
         xmlns:local="clr-namespace:VewModelSample.View"
         xmlns:viewModel="clr-namespace:VewModelSample.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <!--<Window.DataContext>
-        <viewModel:MainViewModel/>
-    </Window.DataContext>-->
+        ResizeMode="NoResize"
+        Title="메인화면" Height="450" Width="700">
     <Grid>
-        <Grid Margin="66,10,400,-10">
-            <local:ClockFunc/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid Grid.Column="0">
+            <local:ClockFunc VerticalAlignment="Center"/>
         </Grid>
-        <Grid>
-            <local:BaseUserControl/>
+        <Grid Grid.Column="1">
+            <local:BaseUserControl VerticalAlignment="Center"/>
         </Grid>
+        <GroupBox Grid.Column="1" BorderThickness="3" Header="기능" BorderBrush="#FF001E31"/>
     </Grid>
 </Window>

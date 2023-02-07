@@ -10,11 +10,11 @@ none
 false
 TRACE
 C:\Users\user\source\repos\Clock_wpf_mvvm\App.xaml
-9-772517843
+131253526145
 
 17-1223087249
 171157170242
-MainWindow.xaml;View\BaseUserControl.xaml;View\ChangeTime.xaml;View\ClockFunc.xaml;View\SetAlarm.xaml;View\StandardChange.xaml;View\StopwatchFunc.xaml;View\TimeFormatChange.xaml;View\ViewLog.xaml;
+MainWindow.xaml;Themes\buttonHover.xaml;Themes\CalenderStyle.xaml;Themes\MainPageButtonFontChange.xaml;Themes\TextBoxWatermark.xaml;View\BaseUserControl.xaml;View\ChangeTime.xaml;View\ClockFunc.xaml;View\SetAlarm.xaml;View\StandardChange.xaml;View\StopwatchFunc.xaml;View\TimeFormatChange.xaml;View\ViewLog.xaml;
 
 True
 

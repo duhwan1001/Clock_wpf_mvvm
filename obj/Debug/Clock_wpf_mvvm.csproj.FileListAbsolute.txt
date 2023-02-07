@@ -31,3 +31,8 @@ C:\Users\user\source\repos\Clock_wpf_mvvm\obj\Debug\Clock_wpf_mvvm.csproj.Genera
 C:\Users\user\source\repos\Clock_wpf_mvvm\obj\Debug\Clock_wpf_mvvm.csproj.CoreCompileInputs.cache
 C:\Users\user\source\repos\Clock_wpf_mvvm\obj\Debug\VewModelSample.exe
 C:\Users\user\source\repos\Clock_wpf_mvvm\obj\Debug\VewModelSample.pdb
+C:\Users\user\source\repos\Clock_wpf_mvvm\obj\Debug\Themes\CalenderStyle.baml
+C:\Users\user\source\repos\Clock_wpf_mvvm\obj\Debug\App.baml
+C:\Users\user\source\repos\Clock_wpf_mvvm\obj\Debug\Themes\TextBoxWatermark.baml
+C:\Users\user\source\repos\Clock_wpf_mvvm\obj\Debug\Themes\buttonHover.baml
+C:\Users\user\source\repos\Clock_wpf_mvvm\obj\Debug\Themes\MainPageButtonFontChange.baml

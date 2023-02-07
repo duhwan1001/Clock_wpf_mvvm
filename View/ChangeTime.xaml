@@ -7,22 +7,81 @@
         xmlns:viewModel="clr-namespace:VewModelSample.ViewModel"
         xmlns:Model="clr-namepsace:VewModelSample.Model"
         mc:Ignorable="d"
-        Title="changeTime" Height="450" Width="800">
+        ResizeMode="NoResize"
+        Title="시간 변경" Height="480" Width="600">
     <!--<Window.DataContext>
         <viewModel:ChangeTimeViewModel/>
     </Window.DataContext>-->
     <Grid>
-        <Calendar SelectedDate="{Binding Path=SelectedDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="116,107,485,133"/>
-        <local:ClockFunc Margin="436,18,60,109"/>
-        <ComboBox SelectedIndex="{Binding TimeSelectIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="460,343,0,0" VerticalAlignment="Top" Width="58">
-            <ComboBoxItem Content="오전" />
-            <ComboBoxItem Content="오후" />
-        </ComboBox>
-        <TextBox HorizontalAlignment="Left" Margin="523,345,0,0" TextWrapping="Wrap" Text="{Binding Path=GetHour, Mode=TwoWay}" VerticalAlignment="Top" Width="60"/>
-        <TextBox HorizontalAlignment="Left" Margin="588,345,0,0" TextWrapping="Wrap" Text="{Binding Path=GetMin, Mode=TwoWay}" VerticalAlignment="Top" Width="60"/>
-        <TextBox HorizontalAlignment="Left" Margin="653,345,0,0" TextWrapping="Wrap" Text="{Binding Path=GetSec, Mode=TwoWay}" VerticalAlignment="Top" Width="60"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="0" Grid.RowSpan="6">
+            <Calendar Style="{DynamicResource styleCalendar}" SelectedDate="{Binding Path=SelectedDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
+        <Grid Grid.Column="1" Grid.RowSpan="4" >
+            <Grid Width="300" Height="300">
 
-        <Button Command="{Binding ChangeTimeConfirm, UpdateSourceTrigger=PropertyChanged}" Content="확인" HorizontalAlignment="Left" Margin="542,394,0,0" VerticalAlignment="Top" Width="113"/>
-        <Button Command="{Binding CloseWindowCommand, UpdateSourceTrigger=PropertyChanged}" Content="취소" HorizontalAlignment="Left" Margin="672,394,0,0" VerticalAlignment="Top" Width="113"/>
+                <Image Source="..\images\clockFrame.png" HorizontalAlignment="Center" VerticalAlignment="Center" Height="262" Width="280"></Image>
+
+                <!-- img -->
+                <Image Source="..\images\sechand.png" Margin="67,8,59,90" RenderTransformOrigin="0.48,0.704" Panel.ZIndex="2">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="{Binding SetSecAngle , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+                <Image Source="..\images\minhand.png" Margin="81,23,84,116" RenderTransformOrigin="0.52,0.79" Panel.ZIndex="1">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="{Binding SetMinAngle , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+                <Image Source="..\images\hourhand.png" Margin="105,66,105,137" RenderTransformOrigin="0.515,0.86">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="{Binding SetHourAngle , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="4" >
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <ComboBox SelectedIndex="{Binding TimeSelectIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Width="60" Height="22">
+                    <ComboBoxItem Content="오전" />
+                    <ComboBoxItem Content="오후" />
+                </ComboBox>
+                <TextBox Style="{DynamicResource MyWaterMarkStyle}" Tag="시"  HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Path=GetHour, Mode=TwoWay}" VerticalAlignment="Center" Width="60" Height="22"/>
+                <TextBox Style="{DynamicResource MyWaterMarkStyle}" Tag="분"  HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Path=GetMin, Mode=TwoWay}"  VerticalAlignment="Center" Width="60" Height="22"/>
+                <TextBox Style="{DynamicResource MyWaterMarkStyle}" Tag="초" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Path=GetSec, Mode=TwoWay}"  VerticalAlignment="Center" Width="60" Height="22"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="5">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Command="{Binding ChangeTimeConfirm, UpdateSourceTrigger=PropertyChanged}" Content="확인" HorizontalAlignment="Center" VerticalAlignment="Center" Width="113"/>
+                <Button Command="{Binding CloseWindowCommand, UpdateSourceTrigger=PropertyChanged}" Content="취소" HorizontalAlignment="Center" VerticalAlignment="Center" Width="113" Margin="20,0,0,0"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

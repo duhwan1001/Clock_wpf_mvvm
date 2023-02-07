@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:VewModelSample.View"
         xmlns:viewModel="clr-namespace:VewModelSample.ViewModel"
         mc:Ignorable="d"
-        Title="StopwatchFunc" Height="450" Width="800">
+        ResizeMode="NoResize"
+        Title="스톱워치" Height="480" Width="600">
     <!--<Window.DataContext>
         <viewModel:StopwatchViewModel/>
     </Window.DataContext>-->

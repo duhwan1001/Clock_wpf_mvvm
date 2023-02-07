@@ -12,13 +12,13 @@
         <viewModel:BaseUserControlViewModel/>
     </UserControl.DataContext>
     <Grid>
-        <StackPanel Margin="443,22,55,21" Orientation="Vertical">
-            <Button Command="{Binding ChangeTimeCommand}" Content="날짜 및 시간 변경" Margin="15" Height="30"/>
-            <Button Command="{Binding StandardChangeCommand}" Content="표준 시간대 변경" Margin="15" Height="30"/>
-            <Button Command="{Binding CTFCommand}" Content="날짜 및 시간 형식 변경" Margin="15" Height="30"/>
-            <Button Command="{Binding SetAlarmCommand}" Content="알람 설정" Margin="15" Height="30"/>
-            <Button Command="{Binding StopwatchCommand}" Content="스톱 워치" Margin="15" Height="30"/>
-            <Button Command="{Binding LogCommand}" Content="로그" Margin="15" Height="30"/>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Width="317">
+            <Button Style="{DynamicResource buttonHover}" Command="{Binding ChangeTimeCommand}" Content="날짜 및 시간 변경" Margin="15" Height="30"/>
+            <Button Style="{DynamicResource buttonHover}" Command="{Binding StandardChangeCommand}" Content="표준 시간대 변경" Margin="15" Height="30"/>
+            <Button Style="{DynamicResource buttonHover}" Command="{Binding CTFCommand}" Content="날짜 및 시간 형식 변경" Margin="15" Height="30"/>
+            <Button Style="{DynamicResource buttonHover}" Command="{Binding SetAlarmCommand}" Content="알람 설정" Margin="15" Height="30"/>
+            <Button Style="{DynamicResource buttonHover}" Command="{Binding StopwatchCommand}" Content="스톱 워치" Margin="15" Height="30"/>
+            <Button Style="{DynamicResource buttonHover}" Command="{Binding LogCommand}" Content="로그" Margin="15" Height="30"/>
         </StackPanel>
     </Grid>
 </UserControl>

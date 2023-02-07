@@ -11,13 +11,18 @@
         <viewModel:ViewLogViewModel/>
     </Window.DataContext>-->
     <Grid>
-        <DataGrid ItemsSource="{Binding Path=logDatas, Mode=TwoWay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" AutoGenerateColumns="False" CanUserAddRows="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Sequence" MinWidth="10" Width="Auto" Binding="{Binding Path=dataGridSequence}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Function" MinWidth="10" Width="Auto" Binding="{Binding Path=dataGridFunction}"></DataGridTextColumn>
-                <DataGridTextColumn Header="AddedTime" MinWidth="10" Width="Auto" Binding="{Binding Path=dataGridAddedTime}"></DataGridTextColumn>
-                <DataGridTextColumn Header="RecordText" MinWidth="10" Width="Auto" Binding="{Binding Path=dataGridSimpleRecordText}"></DataGridTextColumn>
-            </DataGrid.Columns>
-        </DataGrid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <DataGrid ItemsSource="{Binding Path=logDatas, Mode=TwoWay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" AutoGenerateColumns="False" CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Sequence" MinWidth="10" Width="Auto" Binding="{Binding Path=dataGridSequence}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Function" MinWidth="10" Width="Auto" Binding="{Binding Path=dataGridFunction}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="AddedTime" MinWidth="10" Width="Auto" Binding="{Binding Path=dataGridAddedTime}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="RecordText" MinWidth="10" Width="Auto" Binding="{Binding Path=dataGridSimpleRecordText}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
     </Grid>
 </Window>
