@@ -10,7 +10,7 @@
                 <ResourceDictionary Source="Themes/CalenderStyle.xaml"/>
                 <ResourceDictionary Source="Themes/TextBoxWatermark.xaml"/>
                 <ResourceDictionary Source="Themes/buttonHover.xaml"/>
-                <ResourceDictionary Source="Themes/MainPageButtonFontChange.xaml"/>
+                <ResourceDictionary Source="Themes/GroupBoxBorderRemoveWhiteSection.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

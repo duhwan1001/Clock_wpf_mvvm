@@ -8,9 +8,9 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         Title="알람 설정" Height="480" Width="600">
-    <!--<Window.DataContext>
-        <viewModel:AlarmViewModel/>
-    </Window.DataContext>-->
+    <Window.Background>
+        <ImageBrush ImageSource="{Binding BackgroundFilepath}"/>
+    </Window.Background>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*"/>
@@ -21,11 +21,11 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="42.1854545454546"/>
         </Grid.RowDefinitions>
         
         <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="3">
-            <Calendar Style="{DynamicResource styleCalendar}" SelectedDate="{Binding Path=SelectedDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Calendar IsTodayHighlighted="False" Style="{DynamicResource styleCalendar}" SelectedDate="{Binding Path=SelectedDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
         <Grid Grid.Column="0" Grid.Row="3">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -38,7 +38,7 @@
                 <TextBox Style="{DynamicResource MyWaterMarkStyle}" Tag="초" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Path=GetSec, Mode=TwoWay}" VerticalAlignment="Center" Width="60" Height="22"/>
             </StackPanel>
         </Grid>
-        <Grid Grid.Column="1" Grid.RowSpan="5">
+        <Grid Grid.Column="1" Grid.RowSpan="4">
             <DataGrid ItemsSource="{Binding Path=alarmDatas, Mode=TwoWay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" AutoGenerateColumns="False" CanUserAddRows="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Sequence" MinWidth="10" Width="Auto" Binding="{Binding Path=alarmSequence}"></DataGridTextColumn>
@@ -53,14 +53,15 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
-        <Grid Grid.Column="0" Grid.Row="5">
+        <Grid Grid.Column="1" Grid.Row="5" Panel.ZIndex="1">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button Command="{Binding AddAlarmConfirm, UpdateSourceTrigger=PropertyChanged}" Content="알람 추가" HorizontalAlignment="Center" VerticalAlignment="Center" Width="113"/>
-                <Button Command="{Binding CloseThisWindow, UpdateSourceTrigger=PropertyChanged}" Content="닫기" HorizontalAlignment="Center" VerticalAlignment="Center" Width="113" Margin="10,0,0,0"/>
+                <Button Style="{DynamicResource buttonHover}" Command="{Binding AddAlarmConfirm, UpdateSourceTrigger=PropertyChanged}" Content="알람 추가" HorizontalAlignment="Center" VerticalAlignment="Center" Width="113"/>
+                <Button Style="{DynamicResource buttonHover}" Command="{Binding CloseThisWindow, UpdateSourceTrigger=PropertyChanged}" Content="닫기" HorizontalAlignment="Center" VerticalAlignment="Center" Width="113" Margin="10,0,0,0"/>
             </StackPanel>
         </Grid>
+        <Border Background="DarkGray" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6"/>
+        <GroupBox Style="{DynamicResource BorderThin}" Grid.Column="0" Grid.RowSpan="4" BorderThickness="3" Header="알람 설정" BorderBrush="Black"/>
 
-       
 
     </Grid>
 </Window>

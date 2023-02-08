@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="buttonHover" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="Gray"/>
+        <Setter Property="Background" Value="WhiteSmoke"/>
+        <Setter Property="BorderBrush" Value="Black"/>
         <Setter Property="FontFamily" Value="C:\Users\user\source\repos\Clock_wpf_mvvm\Fonts\#Gowun Dodum"/> <!-- 폰트 적용 하는법 -->
         <Setter Property="Template">
             <Setter.Value>

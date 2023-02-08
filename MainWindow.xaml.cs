@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VewModelSample.Model;
+using VewModelSample.ViewModel;
 
 namespace VewModelSample
 {
@@ -23,6 +25,7 @@ namespace VewModelSample
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = ClockViewModel.Instance;
         }
     }
 }

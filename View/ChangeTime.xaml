@@ -9,9 +9,9 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         Title="시간 변경" Height="480" Width="600">
-    <!--<Window.DataContext>
-        <viewModel:ChangeTimeViewModel/>
-    </Window.DataContext>-->
+    <Window.Background>
+        <ImageBrush ImageSource="{Binding BackgroundFilepath}"/>
+    </Window.Background>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*"/>
@@ -23,10 +23,10 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Column="0" Grid.RowSpan="6">
-            <Calendar Style="{DynamicResource styleCalendar}" SelectedDate="{Binding Path=SelectedDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Grid Grid.Column="0" Grid.RowSpan="5">
+            <Calendar IsTodayHighlighted="False" Style="{DynamicResource styleCalendar}" SelectedDate="{Binding Path=SelectedDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
         <Grid Grid.Column="1" Grid.RowSpan="4" >
             <Grid Width="300" Height="300">
@@ -39,7 +39,7 @@
                         <TransformGroup>
                             <ScaleTransform/>
                             <SkewTransform/>
-                            <RotateTransform Angle="{Binding SetSecAngle , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <RotateTransform Angle="{Binding SetSecAngle, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                             <TranslateTransform/>
                         </TransformGroup>
                     </Image.RenderTransform>
@@ -49,7 +49,7 @@
                         <TransformGroup>
                             <ScaleTransform/>
                             <SkewTransform/>
-                            <RotateTransform Angle="{Binding SetMinAngle , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <RotateTransform Angle="{Binding SetMinAngle, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                             <TranslateTransform/>
                         </TransformGroup>
                     </Image.RenderTransform>
@@ -59,7 +59,7 @@
                         <TransformGroup>
                             <ScaleTransform/>
                             <SkewTransform/>
-                            <RotateTransform Angle="{Binding SetHourAngle , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <RotateTransform Angle="{Binding SetHourAngle, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                             <TranslateTransform/>
                         </TransformGroup>
                     </Image.RenderTransform>
@@ -72,16 +72,18 @@
                     <ComboBoxItem Content="오전" />
                     <ComboBoxItem Content="오후" />
                 </ComboBox>
-                <TextBox Style="{DynamicResource MyWaterMarkStyle}" Tag="시"  HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Path=GetHour, Mode=TwoWay}" VerticalAlignment="Center" Width="60" Height="22"/>
-                <TextBox Style="{DynamicResource MyWaterMarkStyle}" Tag="분"  HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Path=GetMin, Mode=TwoWay}"  VerticalAlignment="Center" Width="60" Height="22"/>
-                <TextBox Style="{DynamicResource MyWaterMarkStyle}" Tag="초" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Path=GetSec, Mode=TwoWay}"  VerticalAlignment="Center" Width="60" Height="22"/>
+                <TextBox Style="{DynamicResource MyWaterMarkStyle}" Tag="시" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Path=SetHour, Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Width="60" Height="22"/>
+                <TextBox Style="{DynamicResource MyWaterMarkStyle}" Tag="분" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Path=SetMin, Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Center" Width="60" Height="22"/>
+                <TextBox Style="{DynamicResource MyWaterMarkStyle}" Tag="초" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Path=SetSec, Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Center" Width="60" Height="22"/>
             </StackPanel>
         </Grid>
-        <Grid Grid.Column="1" Grid.Row="5">
+        <Grid Grid.Column="1" Grid.Row="5" Panel.ZIndex="1">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Command="{Binding ChangeTimeConfirm, UpdateSourceTrigger=PropertyChanged}" Content="확인" HorizontalAlignment="Center" VerticalAlignment="Center" Width="113"/>
-                <Button Command="{Binding CloseWindowCommand, UpdateSourceTrigger=PropertyChanged}" Content="취소" HorizontalAlignment="Center" VerticalAlignment="Center" Width="113" Margin="20,0,0,0"/>
+                <Button Style="{DynamicResource buttonHover}" Command="{Binding ChangeTimeConfirm, UpdateSourceTrigger=PropertyChanged}" Content="설정" HorizontalAlignment="Center" VerticalAlignment="Center" Width="113"/>
+                <Button Style="{DynamicResource buttonHover}" Command="{Binding CloseWindowCommand, UpdateSourceTrigger=PropertyChanged}" Content="닫기" HorizontalAlignment="Center" VerticalAlignment="Center" Width="113" Margin="20,0,0,0"/>
             </StackPanel>
         </Grid>
+        <GroupBox Style="{DynamicResource BorderThin}" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="5" BorderThickness="3" Header="날짜 및 시간 설정" BorderBrush="Black"/>
+        <Border Background="DarkGray" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6"/>
     </Grid>
 </Window>

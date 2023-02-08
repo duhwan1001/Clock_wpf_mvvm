@@ -8,19 +8,54 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         Title="스톱워치" Height="480" Width="600">
-    <!--<Window.DataContext>
-        <viewModel:StopwatchViewModel/>
-    </Window.DataContext>-->
+    <Window.Background>
+        <ImageBrush ImageSource="{Binding BackgroundFilepath}"/>
+    </Window.Background>
     <Grid>
-        <TextBlock HorizontalAlignment="Center" Margin="0,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="64"><Run Language="ko-kr" Text="{Binding StopWatch}"/></TextBlock>
-        <DataGrid ItemsSource="{Binding Path=alarmDatas, Mode=TwoWay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" Margin="270,126,270,92" AutoGenerateColumns="False" CanUserAddRows="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Sequence" MinWidth="10" Width="Auto" Binding="{Binding Path=alarmSequence}"></DataGridTextColumn>
-                <DataGridTextColumn Header="TargetTime" MinWidth="10" Width="Auto" Binding="{Binding Path=targetTime}"></DataGridTextColumn>
-            </DataGrid.Columns>
-        </DataGrid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="42.1854545454546"/>
+        </Grid.RowDefinitions>
 
-        <Button Command="{Binding TimeFormatChangeConfirm, UpdateSourceTrigger=PropertyChanged}" Content="확인" HorizontalAlignment="Left" Margin="281,362,0,0" VerticalAlignment="Top" Width="113"/>
-        <Button Command="{Binding CloseWindowCommand, UpdateSourceTrigger=PropertyChanged}" Content="취소" HorizontalAlignment="Left" Margin="411,362,0,0" VerticalAlignment="Top" Width="113"/>
+        <!--<Border Background="white" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1"/>-->
+        <GroupBox Style="{DynamicResource BorderThin}" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="4" BorderThickness="3" Header="스톱워치" BorderBrush="Black" Panel.ZIndex="1"/>
+        <Grid Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2">
+            <TextBlock FontSize="30" TextAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" Width="214" Text="{Binding StopWatch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="0,12,0,0"/>
+        </Grid>
+        <Grid Grid.Column="2" Grid.Row="2" Grid.RowSpan="2" Grid.ColumnSpan="2">
+            <DataGrid ItemsSource="{Binding Path=swDatas, Mode=TwoWay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" AutoGenerateColumns="False" CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Sequence" MinWidth="10" Width="Auto" Binding="{Binding Path=stopWatchSeq}"/>
+                    <DataGridTextColumn Header="SaveTime" MinWidth="10" Width="Auto" Binding="{Binding Path=saveTime}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Grid Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="2">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Style="{DynamicResource buttonHover}" Command="{Binding RecordStopwatch, UpdateSourceTrigger=PropertyChanged}" Content="기록" HorizontalAlignment="Center" VerticalAlignment="Center" Width="113"/>
+                <Button Style="{DynamicResource buttonHover}" Command="{Binding StartStopWatch, UpdateSourceTrigger=PropertyChanged}" Content="시작" HorizontalAlignment="Center" VerticalAlignment="Center" Width="113" Margin="10,0,0,0"/>
+            </StackPanel>
+        </Grid>
+        <Border Background="DarkGray" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="4" Panel.ZIndex="-1"/>
+        
+        <Grid Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="6" Panel.ZIndex="1">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Style="{DynamicResource buttonHover}" Command="{Binding CloseWindowCommand, UpdateSourceTrigger=PropertyChanged}" Content="닫기" HorizontalAlignment="Center" VerticalAlignment="Center" Width="113"/>
+            </StackPanel>
+        </Grid>
+        <Border Background="DarkGray" Grid.Column="0" Grid.ColumnSpan="6" Grid.Row="6"/>
     </Grid>
 </Window>

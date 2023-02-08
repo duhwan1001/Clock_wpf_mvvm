@@ -9,27 +9,31 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         Title="포맷 변경" Height="480" Width="600">
-    <!--<Window.DataContext>
-        <viewModel:TimeFormatChangeViewModel/>
-    </Window.DataContext>-->
+    <Window.Background>
+        <ImageBrush ImageSource="{Binding BackgroundFilepath}"/>
+    </Window.Background>
     <Grid>
-
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="2.5*"/>
+            <ColumnDefinition Width="2.5*"/>
+            <ColumnDefinition Width="2.5*"/>
+            <ColumnDefinition Width="2.5*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="42.1854545454546"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+        
+        <GroupBox Style="{DynamicResource BorderThin}" Grid.ColumnSpan="4" Grid.Column="0" Grid.RowSpan="6" BorderThickness="3" Header="포맷 변경" BorderBrush="Black"/>
+
+        <GroupBox Style="{DynamicResource BorderThin}" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" BorderThickness="3" Header="날짜 및 시간 형식" BorderBrush="Black"/>
+        <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="2">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <StackPanel Margin="0,0,0,10" HorizontalAlignment="Left">
-                    <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center"><Run Language="ko-kr" Text="날짜 및 시간 형식"/></TextBlock>
-                </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10">
                     <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center"><Run Language="ko-kr" Text="날짜"/></TextBlock>
                     <ComboBox SelectedIndex="{Binding TemporaryDateIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="216" RenderTransformOrigin="0.688,0.452" Margin="15,0,0,0">
@@ -50,11 +54,10 @@
                 </StackPanel>
             </StackPanel>
         </Grid>
-        <Grid Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2">
+        
+        <GroupBox Style="{DynamicResource BorderThin}" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="3" Grid.RowSpan="2" BorderThickness="3" Header="출력 형식" BorderBrush="Black"/>
+        <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" Grid.RowSpan="2">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <StackPanel Margin="0,0,0,10" HorizontalAlignment="Left">
-                    <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center"><Run Language="ko-kr" Text="출력 형식"/></TextBlock>
-                </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10">
                     <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center"><Run Language="ko-kr" Text="날짜"/></TextBlock>
                     <TextBlock TextWrapping="Wrap" Text="{Binding ViewTemporaryDate, Mode=TwoWay}" VerticalAlignment="Top" Width="216" Margin="15,0,0,0"/>
@@ -65,15 +68,14 @@
                 </StackPanel>
             </StackPanel>
         </Grid>
-        <!--<Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">-->
-        <!--<Grid HorizontalAlignment="Center" Height="223" VerticalAlignment="Center" Width="288">-->
-        <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5">
+        
+        <Grid Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="6" Panel.ZIndex="1">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Command="{Binding TimeFormatChangeConfirm, UpdateSourceTrigger=PropertyChanged}" Content="확인" HorizontalAlignment="Center" VerticalAlignment="Center" Width="113"/>
-                <Button Command="{Binding CloseWindowCommand, UpdateSourceTrigger=PropertyChanged}" Content="취소" HorizontalAlignment="Center" VerticalAlignment="Center" Width="113" Margin="10,0,0,0"/>
+                <Button Style="{DynamicResource buttonHover}" Command="{Binding TimeFormatChangeConfirm, UpdateSourceTrigger=PropertyChanged}" Content="설정" HorizontalAlignment="Center" VerticalAlignment="Center" Width="113"/>
+                <Button Style="{DynamicResource buttonHover}" Command="{Binding CloseWindowCommand, UpdateSourceTrigger=PropertyChanged}" Content="닫기" HorizontalAlignment="Center" VerticalAlignment="Center" Width="113" Margin="10,0,0,0"/>
             </StackPanel>
         </Grid>
-
+        <Border Background="DarkGray" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="6" Grid.RowSpan="4"/>
 
         <!--</Grid>-->
 

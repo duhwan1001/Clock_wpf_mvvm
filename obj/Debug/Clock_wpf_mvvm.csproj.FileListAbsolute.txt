@@ -35,4 +35,5 @@ C:\Users\user\source\repos\Clock_wpf_mvvm\obj\Debug\Themes\CalenderStyle.baml
 C:\Users\user\source\repos\Clock_wpf_mvvm\obj\Debug\App.baml
 C:\Users\user\source\repos\Clock_wpf_mvvm\obj\Debug\Themes\TextBoxWatermark.baml
 C:\Users\user\source\repos\Clock_wpf_mvvm\obj\Debug\Themes\buttonHover.baml
-C:\Users\user\source\repos\Clock_wpf_mvvm\obj\Debug\Themes\MainPageButtonFontChange.baml
+C:\Users\user\source\repos\Clock_wpf_mvvm\obj\Debug\Themes\TextBlockFontApply.baml
+C:\Users\user\source\repos\Clock_wpf_mvvm\obj\Debug\Themes\GroupBoxBorderRemoveWhiteSection.baml

@@ -8,6 +8,9 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         Title="메인화면" Height="450" Width="700">
+    <Window.Background>
+        <ImageBrush ImageSource="{Binding BackgroundFilepath}"/>
+    </Window.Background>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*"/>
@@ -16,10 +19,11 @@
         
         <Grid Grid.Column="0">
             <local:ClockFunc VerticalAlignment="Center"/>
+            <Button Style="{DynamicResource buttonHover}" Command="{Binding ChangeBackground}" Content="배경변경" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="50" Height="20"/>
         </Grid>
         <Grid Grid.Column="1">
             <local:BaseUserControl VerticalAlignment="Center"/>
         </Grid>
-        <GroupBox Grid.Column="1" BorderThickness="3" Header="기능" BorderBrush="#FF001E31"/>
+        <GroupBox Style="{DynamicResource BorderThin}" Grid.Column="1" BorderThickness="3" Header="기능" BorderBrush="Black"/>
     </Grid>
 </Window>

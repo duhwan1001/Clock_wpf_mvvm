@@ -18,6 +18,8 @@ namespace VewModelSample.Model
         public int timeMode = 0;
         public DateTime standard;
 
+        public string backgroundFilepath = "images/Background/whiteAndGrayGradient.jpg";
+
         // ClockView
 
         public DateTime currentTime;
@@ -53,9 +55,18 @@ namespace VewModelSample.Model
         public int timeSelectIndex = 0;
         public String timeSelectFormat;
         public String selectedDate;
+
+        public String setHour;
+        public String setMin;
+        public String setSec;
+
         public String getHour;
         public String getMin;
         public String getSec;
+
+        public Double setHourAngle;
+        public int setMinAngle;
+        public int setSecAngle;
 
         // TimeFormatChange
         public int temporaryDateIndex;
@@ -93,7 +104,7 @@ namespace VewModelSample.Model
         }
 
         // StopWatch
-        public String stopWatch;
+        public String stopWatch = "기본값";
 
         // SelAlarm
         public int stopWatchSeq = 0;

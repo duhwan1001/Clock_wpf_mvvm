@@ -116,7 +116,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\MainPageButtonFontChange.xaml">
+    <Page Include="Themes\GroupBoxBorderRemoveWhiteSection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\TextBlockFontApply.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -191,6 +195,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\clockFrame.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\Background\windowsDefault.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\Background\whiteAndGrayGradient.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

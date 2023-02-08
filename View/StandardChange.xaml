@@ -8,42 +8,49 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         Title="표준시 변경" Height="480" Width="600">
-    <!--<Window.DataContext>
-        <viewModel:StandardChangeViewModel/>
-    </Window.DataContext>-->
+    <Window.Background>
+        <ImageBrush ImageSource="{Binding BackgroundFilepath}"/>
+    </Window.Background>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="2.5*"/>
+            <ColumnDefinition Width="2.5*"/>
+            <ColumnDefinition Width="2.5*"/>
+            <ColumnDefinition Width="2.5*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="42.1854545454546"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
-            <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center"><Run Language="ko-kr" Text="표준 시간대"/></TextBlock>
-        </Grid>
-        <Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2">
-            <ComboBox SelectedIndex="{Binding StandardChangeIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="394">
+
+        <GroupBox Style="{DynamicResource BorderThin}" Grid.ColumnSpan="4" Grid.Column="0" Grid.RowSpan="6" BorderThickness="3" Header="표준시 변경" BorderBrush="Black"/>
+
+        <GroupBox Style="{DynamicResource BorderThin}" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" BorderThickness="3" Header="표준 시간대" BorderBrush="Black"/>
+        <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <ComboBox SelectedIndex="{Binding StandardChangeIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="215">
                 <ComboBoxItem Content="KST(UTC+9)" />
                 <ComboBoxItem Content="UTC(UTC+0)" />
                 <ComboBoxItem Content="PST(UTC-8)" />
             </ComboBox>
         </Grid>
-        <Grid Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2">
+        
+        <GroupBox Style="{DynamicResource BorderThin}" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="3" Grid.RowSpan="2" BorderThickness="3" Header="출력 날짜 및 시간" BorderBrush="Black"/>
+        <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="출력 날짜 및 시간 :" VerticalAlignment="Center"/>
-                <TextBlock TextWrapping="Wrap" Text="{Binding StandardChangeView, Mode=TwoWay}" VerticalAlignment="Center" Width="224"/>
+                <TextBlock TextWrapping="Wrap" Text="{Binding StandardChangeView, Mode=TwoWay}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </StackPanel>
         </Grid>
-        <Grid Grid.Column="1" Grid.Row="4">
+        <Grid Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="6" Panel.ZIndex="1">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button Command="{Binding StandardChangeConfirm, UpdateSourceTrigger=PropertyChanged}" Content="확인" HorizontalAlignment="Center" VerticalAlignment="Center" Width="113"/>
-                <Button Command="{Binding CloseWindowCommand, UpdateSourceTrigger=PropertyChanged}" Content="취소" HorizontalAlignment="Center" VerticalAlignment="Center" Width="113" Margin="10,0,0,0"/>
+                <Button Style="{DynamicResource buttonHover}" Command="{Binding StandardChangeConfirm, UpdateSourceTrigger=PropertyChanged}" Content="설정" HorizontalAlignment="Center" VerticalAlignment="Center" Width="113"/>
+                <Button Style="{DynamicResource buttonHover}" Command="{Binding CloseWindowCommand, UpdateSourceTrigger=PropertyChanged}" Content="닫기" HorizontalAlignment="Center" VerticalAlignment="Center" Width="113" Margin="10,0,0,0"/>
             </StackPanel>
         </Grid>
+        <Border Background="DarkGray" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="6" Grid.RowSpan="4"/>
     </Grid>
 </Window>
