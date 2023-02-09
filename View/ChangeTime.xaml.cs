@@ -26,5 +26,6 @@ namespace VewModelSample.View
             InitializeComponent();
             this.DataContext = ClockViewModel.Instance;
         }
+
     }
 }

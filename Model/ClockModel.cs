@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using VewModelSample.ViewModel;
@@ -96,7 +97,7 @@ namespace VewModelSample.Model
         public String standardChangeView;
 
         // SelAlarm
-        public int alaSequence = 0;
+        public int alarmThreadSeq = 0;
         public class alarmData
         {
             public int alarmSequence { get; set; }
@@ -104,9 +105,13 @@ namespace VewModelSample.Model
         }
 
         // StopWatch
-        public String stopWatch = "기본값";
+        public String stopWatch = "00:00:00:00";
 
-        // SelAlarm
+        public String swLeftText = "기록";
+        public String swRightText = "시작";
+
+        public Boolean swLeftButtonTF = false;
+
         public int stopWatchSeq = 0;
         public class swData
         {

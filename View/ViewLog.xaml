@@ -33,7 +33,7 @@
         </Grid>
         <Grid Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1" Panel.ZIndex="1">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Style="{DynamicResource buttonHover}" Command="{Binding CloseWindowCommand, UpdateSourceTrigger=PropertyChanged}" Content="닫기" HorizontalAlignment="Center" VerticalAlignment="Center" Width="113"/>
+                <Button Style="{DynamicResource buttonHover}" Command="{x:Static viewModel:ClockViewModel.CloseCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Content="닫기" HorizontalAlignment="Center" VerticalAlignment="Center" Width="113"/>
             </StackPanel>
         </Grid>
         <Border Background="DarkGray" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"/>

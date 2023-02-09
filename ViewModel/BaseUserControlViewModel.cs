@@ -15,37 +15,27 @@ using VewModelSample.ViewModel.Command;
 
 namespace VewModelSample.ViewModel
 {
-    class BaseUserControlViewModel : INotifyPropertyChanged
-    {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged(string prop)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
-            }
-        }
-
+    class BaseUserControlViewModel 
+    { 
         public ICommand ChangeTimeCommand => new RelayCommand<object>(ViewChangeTime, null);
         private void ViewChangeTime(object e) // 날짜 및 시간 변경
         {
             ChangeTime changeTime = new ChangeTime();
-            changeTime.Show();
+            changeTime.ShowDialog();
         }
 
         public ICommand StandardChangeCommand => new RelayCommand<object>(ViewStandardChange, null);
         private void ViewStandardChange(object e) // 표준 시간대 변경
         {
             StandardChange standardChange = new StandardChange();
-            standardChange.Show();
+            standardChange.ShowDialog();
         }
 
         public ICommand CTFCommand => new RelayCommand<object>(ViewCTF, null);
         private void ViewCTF(object e) // 날짜 및 시간 형식 변경
         {
             TimeFormatChange timeFormatChange = new TimeFormatChange();
-            timeFormatChange.Show();
+            timeFormatChange.ShowDialog();
         }
 
         public ICommand SetAlarmCommand => new RelayCommand<object>(ViewSetAlarm, null);

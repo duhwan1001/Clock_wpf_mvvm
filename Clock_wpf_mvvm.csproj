@@ -67,10 +67,11 @@
     <Resource Include="Fonts\NotoSansKR-Regular.otf" />
     <Resource Include="Fonts\GowunDodum-Regular.ttf" />
     <None Include="ViewModel\AlarmViewModel.cs" />
+    <Compile Include="UtilClass\DispatcherService.cs" />
     <Compile Include="ViewModel\BaseUserControlViewModel.cs" />
     <None Include="ViewModel\ChangeTimeViewModel.cs" />
     <Compile Include="ViewModel\ClockViewModel.cs" />
-    <Compile Include="ViewModel\Command\RelayCommand.cs" />
+    <Compile Include="Command\RelayCommand.cs" />
     <None Include="ViewModel\MainViewModel.cs" />
     <None Include="ViewModel\StandardChangeViewModel.cs" />
     <None Include="ViewModel\StopwatchViewModel.cs" />

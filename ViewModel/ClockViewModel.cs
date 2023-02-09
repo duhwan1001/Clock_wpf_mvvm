@@ -2,25 +2,26 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading;
-using System.Timers;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media.Animation;
-using System.Windows.Threading;
 using VewModelSample.Model;
 using VewModelSample.ViewModel.Command;
 using static VewModelSample.Model.ClockModel;
 using MessageBox = System.Windows.MessageBox;
 using System.IO;
-using System.Windows.Media;
+using System.Text.RegularExpressions;
+using VewModelSample.UtilClass;
+using Application = System.Windows.Application;
+using System.Linq;
+using VewModelSample.View;
 
 namespace VewModelSample.ViewModel
 {
     public class ClockViewModel : INotifyPropertyChanged
     {
+        #region baseFunction -------------------------------------------------------------------------------
         // PropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -46,10 +47,6 @@ namespace VewModelSample.ViewModel
         public ClockViewModel()
         {
             clockModel = new Model.ClockModel();
-
-            //CurrentDate = Standard.ToString(DateFormat);
-            //CurrentTime = Standard.ToString(TimeFormat);
-            //CurrentKind = "KST";
 
             DateFormat = "yyyy'년' M'월' d'일' dddd";
             TimeFormat = "tt h:mm:ss";
@@ -139,8 +136,91 @@ namespace VewModelSample.ViewModel
             get { return clockModel.timeMode; }
             set { clockModel.timeMode = value; OnPropertyChanged("TimeMode"); }
         }
+        public String DateFormat
+        {
+            get { return clockModel.dateFormat; }
+            set
+            {
+                clockModel.dateFormat = value;
+                OnPropertyChanged("SetDateFormat");
+            }
+        }
+
+        public String TimeFormat
+        {
+            get { return clockModel.timeFormat; }
+            set
+            {
+                clockModel.timeFormat = value;
+                OnPropertyChanged("SetTimeFormat");
+            }
+        }
+
+        public String Kind
+        {
+            get { return clockModel.kind; }
+            set { clockModel.kind = value; OnPropertyChanged("Kind"); }
+        }
+
+        public String ViewCurrentDate
+        {
+            get
+            {
+                return clockModel.viewCurrentDate;
+            }
+            set
+            {
+                clockModel.viewCurrentDate = value;
+                OnPropertyChanged("ViewCurrentDate");
+            }
+        }
+
+        public String ViewCurrentTime
+        {
+            get
+            {
+                return clockModel.viewCurrentTime;
+            }
+            set
+            {
+                clockModel.viewCurrentTime = value;
+                OnPropertyChanged("ViewCurrentTime");
+            }
+        }
+
+        public String ViewCurrentKind
+        {
+            get
+            {
+                return clockModel.viewCurrentKind;
+            }
+            set
+            {
+                clockModel.viewCurrentKind = value;
+                OnPropertyChanged("ViewCurrentKind");
+            }
+        }
+        #endregion
 
         #region ChangeTimeSection -----------------------------------------------------------------------------------------------
+        public String TimeSelectFormat
+        {
+            get { return clockModel.timeSelectFormat; }
+            set { clockModel.timeSelectFormat = value; OnPropertyChanged("TimeSelectFormat"); }
+        }
+
+        public String SelectedDate
+        {
+            get
+            {
+                return clockModel.selectedDate;
+            }
+            set
+            {
+                clockModel.selectedDate = value;
+                OnPropertyChanged("SelectedDate");
+            }
+        }
 
         public int TimeSelectIndex
         {
@@ -161,27 +241,6 @@ namespace VewModelSample.ViewModel
             }
         }
 
-        public String TimeSelectFormat
-        {
-            get { return clockModel.timeSelectFormat; }
-            set { clockModel.timeSelectFormat = value; OnPropertyChanged("TimeSelectFormat"); }
-        }
-
-        public String SelectedDate
-        {
-            get
-            {
-                return clockModel.selectedDate;
-            }
-            set
-            {
-                clockModel.selectedDate = value;
-                OnPropertyChanged("SelectedDate");
-            }
-        }
-
-
-
         // 시간 변경 확인 버튼
         public String SetHour
         {
@@ -195,11 +254,12 @@ namespace VewModelSample.ViewModel
                 }
                 OnPropertyChanged("SetHour"); }
         }
+
         public String SetMin
         {
             get { return clockModel.setMin; }
             set 
-            { 
+            {
                 clockModel.setMin = value;
                 if (!(int.Parse(SetMin) > 60))
                 {
@@ -208,6 +268,7 @@ namespace VewModelSample.ViewModel
                 OnPropertyChanged("SetMin"); 
             }
         }
+
         public String SetSec
         {
             get { return clockModel.setSec; }
@@ -220,6 +281,13 @@ namespace VewModelSample.ViewModel
                 }
                 OnPropertyChanged("SetSec"); 
             }
+        }
+
+        private bool IsNumeric(string source)
+        {
+            Regex regex = new Regex("[^0-9.-]+");
+
+            return !regex.IsMatch(source);
         }
 
         public Double SetHourAngle
@@ -237,10 +305,6 @@ namespace VewModelSample.ViewModel
             get { return clockModel.setSecAngle; }
             set { clockModel.setSecAngle = value; OnPropertyChanged("SetSecAngle"); }
         }
-
-        //SecAngle = Standard.Second* 6;
-        //MinAngle = Standard.Minute* 6;
-        //HourAngle = (Standard.Hour* 30) + (Standard.Minute* 0.5);
 
         public void UpdateHour(object sender, RoutedEventArgs e)
         {
@@ -262,15 +326,43 @@ namespace VewModelSample.ViewModel
 
         private void changeTimeConfirm(object e)
         {
-            if (SetHour == null || SetMin == null || SetSec == null)
+            if (SelectedDate == null)
+            {
+                MessageBox.Show("날짜를 지정하세요", "오류", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (SetHour == "" || SetMin == "" || SetSec == "")
             {
                 MessageBox.Show("시간을 입력하세요", "오류", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (IsNumeric(SetHour) == false || IsNumeric(SetMin) == false || IsNumeric(SetSec) == false)
+            {
+                MessageBox.Show("숫자만 입력 가능합니다.", "오류", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }            
+            
+            if (int.Parse(SetHour) < 0|| int.Parse(SetMin) < 0 || int.Parse(SetSec) < 0)
+            {
+                MessageBox.Show("양수를 입력하세요.", "오류", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
             int hour = int.Parse(SetHour);
             int min = int.Parse(SetMin);
             int sec = int.Parse(SetSec);
+
+            if(min == 60)
+            {
+                min = 0;
+            }
+
+            if(sec == 60)
+            {
+                sec = 0;
+            }
 
             if (hour > 12 || min > 60 || sec > 60)
             {
@@ -307,24 +399,101 @@ namespace VewModelSample.ViewModel
             String RecordText = now + "에서 변경한 시간 : " + afterChangeTime;
 
             AddData("ChangeTime", now, RecordText);
-
-
-            MessageBox.Show("시간 설정 완료", "메세지", MessageBoxButton.OK, MessageBoxImage.Information);
+                    
+            if (MessageBox.Show("시간 설정 완료.", "성공", MessageBoxButton.OK, MessageBoxImage.Information) == MessageBoxResult.OK)
+            {
+                Application.Current.Windows.OfType<ChangeTime>().First().Close();
+            }
 
             SetSecAngle = 0;
             SetMinAngle = 0;
             SetHourAngle = 0;
+        }
+        #endregion
 
-            
+        #region StandardChange -----------------------------------------------------------------------------------------------
 
-
+        public String StandardChangeFormat
+        {
+            get { return clockModel.standardChangeFormat; }
+            set { clockModel.standardChangeFormat = value; OnPropertyChanged("StandardChangeFormat"); }
         }
 
+        public int StandardChangeIndex
+        {
+            get { return clockModel.standardChangeIndex; }
+            set
+            {
+                clockModel.standardChangeIndex = value;
 
+                if (clockModel.standardChangeIndex == 0)
+                {
+                    StandardChangeFormat = "KST(UTC+9)";
+                    StandardChangeView = DateTime.Now.ToString(StandardChangeViewFormat);
+                }
+                else if (clockModel.standardChangeIndex == 1)
+                {
+                    StandardChangeFormat = "UTC(UTC+0)";
+                    StandardChangeView = DateTime.UtcNow.ToString(StandardChangeViewFormat);
+                }
+                else if (clockModel.standardChangeIndex == 2)
+                {
+                    StandardChangeFormat = "PST(UTC-8)";
+                    StandardChangeView = DateTime.UtcNow.Subtract(new TimeSpan(8, 0, 0)).ToString(StandardChangeViewFormat);
+                }
+
+                OnPropertyChanged("StandardChangeIndex");
+            }
+        }
+
+        public String StandardChangeViewFormat
+        {
+            get { return clockModel.standardChangeViewFormat; }
+            set { clockModel.standardChangeViewFormat = value; OnPropertyChanged("StandardChangeViewFormat"); }
+        }
+
+        public String StandardChangeView
+        {
+            get { return clockModel.standardChangeView; }
+            set { clockModel.standardChangeView = value; OnPropertyChanged("StandardChangeView"); }
+        }
+
+        // 표준시 변경 확인 버튼
+        public ICommand StandardChangeConfirm => new RelayCommand<object>(standardChangeConfirm, null);
+
+        private void standardChangeConfirm(object e)
+        {
+            String function = "Standard Change";
+            String now = Standard.ToString(StandardChangeViewFormat);
+            String beforeKind = Kind;
+
+            if (StandardChangeIndex == 0)
+            {
+                TimeMode = 0;
+            }
+            else if (StandardChangeIndex == 1)
+            {
+                TimeMode = 2;
+            }
+            else if (StandardChangeIndex == 2)
+            {
+                TimeMode = 1;
+                Standard = Standard.Subtract(new TimeSpan(8, 0, 0));
+            }
+
+            Kind = StandardChangeFormat;
+            String RecordText = beforeKind + "에서 변경한 기준시 : " + Kind;
+
+            AddData(function, now, RecordText);
+
+            if(MessageBox.Show("선택한 표준시로 변경하였습니다.", "성공", MessageBoxButton.OK, MessageBoxImage.Information) == MessageBoxResult.OK)
+            {
+                Application.Current.Windows.OfType<StandardChange>().First().Close();
+            }
+        }
         #endregion
 
         #region TimeFormatChangeSection -----------------------------------------------------------------------------------------------
-
         public int TemporaryDateIndex
         {
             get { return clockModel.temporaryDateIndex; }
@@ -452,200 +621,11 @@ namespace VewModelSample.ViewModel
 
             AddData(function, now, RecordText);
 
-            MessageBox.Show("수정 완료");
-        }
-
-        #endregion
-
-        #region ClockMain -----------------------------------------------------------------------------------------------
-
-        public String DateFormat
-        {
-            get { return clockModel.dateFormat; }
-            set
+            if (MessageBox.Show("선택한 포맷으로 변경 하였습니다.", "성공", MessageBoxButton.OK, MessageBoxImage.Information) == MessageBoxResult.OK)
             {
-                clockModel.dateFormat = value;
-                OnPropertyChanged("SetDateFormat");
+                Application.Current.Windows.OfType<TimeFormatChange>().First().Close();
             }
         }
-
-        public String TimeFormat
-        {
-            get { return clockModel.timeFormat; }
-            set
-            {
-                clockModel.timeFormat = value;
-                OnPropertyChanged("SetTimeFormat");
-            }
-        }
-
-        public String Kind
-        {
-            get { return clockModel.kind; }
-            set { clockModel.kind = value; OnPropertyChanged("Kind"); }
-        }
-
-        public String ViewCurrentDate
-        {
-            get
-            {
-                return clockModel.viewCurrentDate;
-            }
-            set
-            {
-                clockModel.viewCurrentDate = value;
-                OnPropertyChanged("ViewCurrentDate");
-            }
-        }
-
-        public String ViewCurrentTime
-        {
-            get
-            {
-                return clockModel.viewCurrentTime;
-            }
-            set
-            {
-                clockModel.viewCurrentTime = value;
-                OnPropertyChanged("ViewCurrentTime");
-            }
-        }
-
-        public String ViewCurrentKind
-        {
-            get
-            {
-                return clockModel.viewCurrentKind;
-            }
-            set
-            {
-                clockModel.viewCurrentKind = value;
-                OnPropertyChanged("ViewCurrentKind");
-            }
-        }
-
-        #endregion
-
-        #region StandardChange -----------------------------------------------------------------------------------------------
-
-        public String StandardChangeFormat
-        {
-            get { return clockModel.standardChangeFormat; }
-            set { clockModel.standardChangeFormat = value; OnPropertyChanged("StandardChangeFormat"); }
-        }
-
-        public int StandardChangeIndex
-        {
-            get { return clockModel.standardChangeIndex; }
-            set
-            {
-                clockModel.standardChangeIndex = value;
-
-                if (clockModel.standardChangeIndex == 0)
-                {
-                    StandardChangeFormat = "KST(UTC+9)";
-                    StandardChangeView = DateTime.Now.ToString(StandardChangeViewFormat);
-                }
-                else if (clockModel.standardChangeIndex == 1)
-                {
-                    StandardChangeFormat = "UTC(UTC+0)";
-                    StandardChangeView = DateTime.UtcNow.ToString(StandardChangeViewFormat);
-                }
-                else if (clockModel.standardChangeIndex == 2)
-                {
-                    StandardChangeFormat = "PST(UTC-8)";
-                    StandardChangeView = DateTime.UtcNow.Subtract(new TimeSpan(8, 0, 0)).ToString(StandardChangeViewFormat);
-                }
-
-                OnPropertyChanged("StandardChangeIndex");
-            }
-        }
-
-        public String StandardChangeViewFormat
-        {
-            get { return clockModel.standardChangeViewFormat; }
-            set { clockModel.standardChangeViewFormat = value; OnPropertyChanged("StandardChangeViewFormat"); }
-        }
-
-        public String StandardChangeView
-        {
-            get { return clockModel.standardChangeView; }
-            set { clockModel.standardChangeView = value; OnPropertyChanged("StandardChangeView"); }
-        }
-
-        // 표준시 변경 확인 버튼
-        public ICommand StandardChangeConfirm => new RelayCommand<object>(standardChangeConfirm, null);
-
-        private void standardChangeConfirm(object e)
-        {
-            String function = "Standard Change";
-            String now = Standard.ToString(StandardChangeViewFormat);
-            String beforeKind = Kind;
-
-            if (StandardChangeIndex == 0)
-            {
-                TimeMode = 0;
-            }
-            else if (StandardChangeIndex == 1)
-            {
-                TimeMode = 2;
-            }
-            else if (StandardChangeIndex == 2)
-            {
-                TimeMode = 1;
-                Standard = Standard.Subtract(new TimeSpan(8, 0, 0));
-            }
-
-            Kind = StandardChangeFormat;
-            String RecordText = beforeKind + "에서 변경한 기준시 : " + Kind;
-
-            AddData(function, now, RecordText);
-
-            MessageBox.Show("수정 완료");
-        }
-
-        #endregion
-
-        #region viewLog -----------------------------------------------------------------------------------------------
-
-        ObservableCollection<ClockModel.dataGridData> _logDatas = null;
-        public ObservableCollection<ClockModel.dataGridData> logDatas
-        {
-            get
-            {
-                if (_logDatas == null)
-                {
-                    _logDatas = new ObservableCollection<ClockModel.dataGridData>();
-                }
-                return _logDatas;
-            }
-            set
-            {
-                _logDatas = value;
-                OnPropertyChanged("logDatas");
-            }
-        }
-
-
-        public int LogSequence
-        {
-            get { return clockModel.logSequence += 1; }
-            set { clockModel.logSequence = value; OnPropertyChanged("Sequence"); }
-        }
-
-
-        public void AddData(String function, String AddedTime, String RecordText)
-        {
-            ClockModel.dataGridData dataGrid = new ClockModel.dataGridData();
-            dataGrid.dataGridSequence = LogSequence;
-            dataGrid.dataGridFunction = function;
-            dataGrid.dataGridAddedTime = AddedTime;
-            dataGrid.dataGridSimpleRecordText = RecordText;
-
-            logDatas.Add(dataGrid);
-        }
-
-
 
         #endregion
 
@@ -688,7 +668,9 @@ namespace VewModelSample.ViewModel
                 OnPropertyChanged("GetSec");
             }
         }
+
         ObservableCollection<ClockModel.alarmData> _alarmDatas = null;
+
         public ObservableCollection<ClockModel.alarmData> alarmDatas
         {
             get
@@ -706,18 +688,21 @@ namespace VewModelSample.ViewModel
             }
         }
 
-
         public int AlarmSequence
         {
-            get { return clockModel.alaSequence += 1; }
-            set { clockModel.alaSequence = value; OnPropertyChanged("Sequence"); }
+            get { return alarmDatas.Count; }
         }
 
+        public int AlarmThreadSeq
+        {
+            get { return clockModel.alarmThreadSeq += 1; }
+            //set { clockModel.alarmThreadSeq = value; OnPropertyChanged("AlarmThreadSeq"); }
+        }
 
         public void AddAlarm(String targetTime)
         {
             ClockModel.alarmData alarmGrid = new ClockModel.alarmData();
-            alarmGrid.alarmSequence = AlarmSequence;
+            alarmGrid.alarmSequence = AlarmSequence + 1;
             alarmGrid.targetTime = targetTime;
 
             alarmDatas.Add(alarmGrid);
@@ -727,11 +712,27 @@ namespace VewModelSample.ViewModel
         public ICommand AddAlarmConfirm => new RelayCommand<object>(addAlarmConfirm, null);
         private void addAlarmConfirm(object e)
         {
-            String function = "SetAlarm";
+            if (SelectedDate == null)
+            {
+                MessageBox.Show("날짜를 지정하세요", "오류", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
             if (GetHour == null || GetMin == null || GetSec == null)
             {
-                MessageBox.Show("시간 입력.");
+                MessageBox.Show("시간을 입력하세요", "오류", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (IsNumeric(GetHour) == false || IsNumeric(GetMin) == false || IsNumeric(GetSec) == false)
+            {
+                MessageBox.Show("숫자만 입력 가능합니다.", "오류", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (int.Parse(GetHour) < 0 || int.Parse(GetMin) < 0 || int.Parse(GetSec) < 0)
+            {
+                MessageBox.Show("양수를 입력하세요.", "오류", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -741,7 +742,7 @@ namespace VewModelSample.ViewModel
 
             if (hour > 12 || min > 60 || sec > 60)
             {
-                MessageBox.Show("시간 오류.");
+                MessageBox.Show("12시가 초과되었거나 60이 초과하였습니다.", "오류", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -754,8 +755,7 @@ namespace VewModelSample.ViewModel
                 hour -= 12;
             }
 
-            string selDate = SelectedDate;
-            DateTime SetDateTime = Convert.ToDateTime(selDate);
+            DateTime SetDateTime = Convert.ToDateTime(SelectedDate);
 
             int year = SetDateTime.Year;
             int month = SetDateTime.Month;
@@ -764,19 +764,18 @@ namespace VewModelSample.ViewModel
             DateTime timeToUse = new DateTime(year, month, day, hour, min, sec);
 
             // log
-            String now = Standard.ToString(StandardChangeViewFormat);
 
-            Standard = timeToUse;
+            //Standard = timeToUse;
+
             String targetTime = timeToUse.ToString(StandardChangeViewFormat);
-
             String RecordText = "등록한 알람 : " + targetTime;
 
-            AddData(function, now, RecordText);
+            AddData("SetAlarm", Standard.ToString(StandardChangeViewFormat), RecordText);
             AddAlarm(targetTime);
 
             Thread alarmThread = new Thread(waitingAlarm);
             alarmThread.IsBackground = true;
-            alarmThread.Name = (AlarmSequence - 1).ToString();
+            alarmThread.Name = (AlarmThreadSeq).ToString();
 
             string[] arr = new string[2];
 
@@ -785,12 +784,31 @@ namespace VewModelSample.ViewModel
 
             alarmThread.Start(arr);
 
-
-            MessageBox.Show("설정 완료");
+            MessageBox.Show("알람이 추가 되었습니다.", "성공", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-        public ICommand RemoveCommand => new RelayCommand<object>(RemoveRow, null);
-        private void RemoveRow(object parameter)
+        // Alarm Thread
+        public void waitingAlarm(Object obj)
+        {
+            string[] datas = (string[])obj;
+            while (true)
+            {
+                if (Standard.ToString(StandardChangeViewFormat).Equals(datas[1]))
+                {
+                    MessageBox.Show(datas[1] + "로 설정된 " + datas[0] + "번 알람", "알람");
+                    AddData("AlarmRinging", Standard.ToString(StandardChangeViewFormat), datas[1] + "로 설정된 " + datas[0] + "번 알람");
+                    DispatcherService.Invoke(() =>
+                    {
+                        alarmDatas.RemoveAt(int.Parse(datas[0]) - 1);
+                    });
+                    break;
+                }
+            }
+        }
+
+        public ICommand RemoveRow => new RelayCommand<object>(removeRow, null);
+
+        private void removeRow(object parameter)
         {
             int index = alarmDatas.IndexOf(parameter as alarmData);
             if (index > -1 && index < alarmDatas.Count)
@@ -798,25 +816,9 @@ namespace VewModelSample.ViewModel
                 alarmDatas.RemoveAt(index);
             }
         }
-
-        void waitingAlarm(Object obj)
-        {
-            while (true)
-            {
-                string[] datas = (string[])obj;
-
-                if (Standard.ToString(StandardChangeViewFormat).Equals(datas[1]))
-                {
-                    MessageBox.Show(datas[1] + "로 설정된 " + datas[0] + "번 알람", "알람");
-                    AddData("AlarmRinging", Standard.ToString(StandardChangeViewFormat), datas[1] + "로 설정된 " + datas[0] + "번 알람");
-                    break;
-                }
-            }
-        }
-
         #endregion
 
-        #region StopWatch ------------------------------------------------------------------------------------------------미완성
+        #region StopWatch ----------------------------------------------------------------------
         public String StopWatch
         {
             get { return clockModel.stopWatch; }
@@ -825,6 +827,27 @@ namespace VewModelSample.ViewModel
                 clockModel.stopWatch = value;
                 OnPropertyChanged("StopWatch");
             }
+        }
+        public int StopWatchSeq
+        {
+            get { return swDatas.Count + 1; }
+        }
+
+        public Boolean SwLeftButtonTF
+        {
+            get { return clockModel.swLeftButtonTF; }
+            set { clockModel.swLeftButtonTF = value; OnPropertyChanged("SwLeftButtonTF"); }
+        }
+
+        public String SwLeftText
+        {
+            get { return clockModel.swLeftText; }
+            set { clockModel.swLeftText = value; OnPropertyChanged("SwLeftText"); }
+        }
+        public String SwRightText
+        {
+            get { return clockModel.swRightText; }
+            set { clockModel.swRightText = value; OnPropertyChanged("SwRightText"); }
         }
 
         ObservableCollection<ClockModel.swData> _swDatas = null;
@@ -844,11 +867,6 @@ namespace VewModelSample.ViewModel
                 OnPropertyChanged("AlarmDatas");
             }
         }
-        public int StopWatchSeq
-        {
-            get { return clockModel.stopWatchSeq += 1; }
-            set { clockModel.stopWatchSeq = value; OnPropertyChanged("StopWatchSeq"); }
-        }
 
         public void AddSwRecord()
         {
@@ -861,52 +879,128 @@ namespace VewModelSample.ViewModel
 
         public ICommand StartStopWatch => new RelayCommand<object>(setStopWatch, null);
 
-        int ThreadCount = 0;
+        int stopwatchFlag = 0;
+        public Stopwatch sw = new Stopwatch();            
         private void setStopWatch(object e)
         {
-            Thread SWThread = new Thread(startStopWatch);
-            SWThread.IsBackground = true;
-            SWThread.Name = nameof(SWThread);
-            SWThread.Start();
-
-            AddData("Stopwatch", Standard.ToString(StandardChangeViewFormat), "스톱워치 시작");
-        }
-
-        public ICommand RecordStopwatch => new RelayCommand<object>(recordStopwatch, null);
-        private void recordStopwatch(object e)
-        {
-            AddSwRecord();
-        }
-
-
-        int stopwatchFlag = 0;
-        public void startStopWatch(Object obj)
-        {
-            Stopwatch sw = new Stopwatch();
-
-
             if(stopwatchFlag == 0)
             {
-                sw.Start();
+                FirstStartSW();
                 stopwatchFlag = 1;
+                SwRightText = "정지";
+                SwLeftButtonTF = true;
+                AddData("Stopwatch", Standard.ToString(StandardChangeViewFormat), "스톱워치 시작");
             }
             else if(stopwatchFlag == 1)
             {
-                sw.Stop();
-                stopwatchFlag = 0;
+                PauseSW();
+                SwRightText = "시작";
+                SwLeftText = "초기화";
+                RecordButtonFlag = 1;
+                stopwatchFlag = 2;
             }
-            
+            else if(stopwatchFlag == 2)
+            {
+                RestartSW();
+                SwRightText = "정지";
+                SwLeftText = "기록";
+                stopwatchFlag = 1;
+            }
 
-            //sw.Stop();
+        }
 
+        public int ResetFlag = 0;
+        Thread SWThread = null;
+        public void FirstStartSW()
+        {
+            SWThread = new Thread(startStopWatch);
+            SWThread.IsBackground = true;
+            SWThread.Name = nameof(SWThread);
+            SWThread.Start();
+        }
+        
+        public void startStopWatch(Object obj)
+        {
+            sw.Start();
             while (true)
             {
                 StopWatch = sw.Elapsed.ToString("hh\\:mm\\:ss\\.ff");
             }
         }
+
+        public void PauseSW()
+        {
+            sw.Stop();
+        }
+
+        public void RestartSW()
+        {
+            sw.Start();
+        }
+        public void ResetSW()
+        {
+            sw.Reset();
+            SwLeftText = "기록";
+            SwLeftButtonTF = false;
+            stopwatchFlag = 0;
+            RecordButtonFlag = 0;
+            swDatas.Clear();
+            SWThread.Abort();
+        }
+
+        public ICommand RecordStopwatch => new RelayCommand<object>(recordStopwatch, null);
+
+        public int RecordButtonFlag = 0;
+        private void recordStopwatch(object e)
+        {
+            if (RecordButtonFlag == 0)
+            {
+                AddSwRecord();
+            }
+            else if (RecordButtonFlag == 1)
+            {
+                ResetSW();
+            }
+        }
         #endregion
 
-        #region Buttons -----------------------------------------------------------------------------------------------
+        #region viewLog --------------------------------------------------------------
+        ObservableCollection<ClockModel.dataGridData> _logDatas = null;
+        public ObservableCollection<ClockModel.dataGridData> logDatas
+        {
+            get
+            {
+                if (_logDatas == null)
+                {
+                    _logDatas = new ObservableCollection<ClockModel.dataGridData>();
+                }
+                return _logDatas;
+            }
+            set
+            {
+                _logDatas = value;
+                OnPropertyChanged("logDatas");
+            }
+        }
+
+        public int LogSequence
+        {
+            get { return logDatas.Count + 1; }
+        }
+
+        public void AddData(String function, String AddedTime, String RecordText)
+        {
+            ClockModel.dataGridData dataGrid = new ClockModel.dataGridData();
+            dataGrid.dataGridSequence = LogSequence;
+            dataGrid.dataGridFunction = function;
+            dataGrid.dataGridAddedTime = AddedTime;
+            dataGrid.dataGridSimpleRecordText = RecordText;
+
+            logDatas.Add(dataGrid);
+        }
+        #endregion
+        
+        #region CommonButtons -----------------------------------------------------------------------------------------------
 
         public String BackgroundFilepath
         {
@@ -935,6 +1029,8 @@ namespace VewModelSample.ViewModel
                 }
             }
         }
+
+        public static readonly ICommand CloseCommand = new RelayCommand<object>(o => ((Window)o).Close());
         #endregion
     }
 }
