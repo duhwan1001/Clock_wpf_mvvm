@@ -43,11 +43,11 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Sequence" MinWidth="10" Width="Auto" Binding="{Binding Path=alarmSequence}"></DataGridTextColumn>
                     <DataGridTextColumn Header="TargetTime" MinWidth="10" Width="Auto" Binding="{Binding Path=targetTime}"></DataGridTextColumn>
-                    <DataGridTemplateColumn Header="Remove">
+                    <DataGridTemplateColumn Header="Remove">    
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Style="{DynamicResource buttonHover}" Content="Delete" 
-                                        Command="{Binding RemoveRow, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridTemplateColumn}}}" 
+                                        Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid},Mode=FindAncestor},Path=DataContext.RemoveRow}"
                                         CommandParameter="{Binding AlarmSequence}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -63,7 +63,5 @@
         </Grid>
         <Border Background="DarkGray" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6"/>
         <GroupBox Style="{DynamicResource BorderThin}" Grid.Column="0" Grid.RowSpan="4" BorderThickness="3" Header="알람 설정" BorderBrush="Black"/>
-
-
     </Grid>
 </Window>
