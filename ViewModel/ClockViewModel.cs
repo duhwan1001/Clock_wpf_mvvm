@@ -16,6 +16,8 @@ using VewModelSample.UtilClass;
 using Application = System.Windows.Application;
 using System.Linq;
 using VewModelSample.View;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace VewModelSample.ViewModel
 {
@@ -248,11 +250,17 @@ namespace VewModelSample.ViewModel
             set 
             {
                 clockModel.setHour = value;
-                if(!(int.Parse(SetHour) > 12))
+                try
                 {
-                    SetHourAngle = int.Parse(SetHour) * 30;
+                    if(!(int.Parse(SetHour) > 12))
+                    {
+                        SetHourAngle = int.Parse(SetHour) * 30;
+                    }
+                    OnPropertyChanged("SetHour"); 
                 }
-                OnPropertyChanged("SetHour"); }
+                catch { }
+            }   
+            
         }
 
         public String SetMin
@@ -260,12 +268,16 @@ namespace VewModelSample.ViewModel
             get { return clockModel.setMin; }
             set 
             {
-                clockModel.setMin = value;
-                if (!(int.Parse(SetMin) > 60))
+                try
                 {
-                    SetMinAngle = int.Parse(value) * 6;
+                    clockModel.setMin = value;
+                    if (!(int.Parse(SetMin) > 60))
+                    {
+                        SetMinAngle = int.Parse(value) * 6;
+                    }
+                    OnPropertyChanged("SetMin");
                 }
-                OnPropertyChanged("SetMin"); 
+                catch { }
             }
         }
 
@@ -274,12 +286,16 @@ namespace VewModelSample.ViewModel
             get { return clockModel.setSec; }
             set 
             {
-                clockModel.setSec = value;
-                if (!(int.Parse(SetSec) > 60))
+                try
                 {
-                    SetSecAngle = int.Parse(value) * 6;
+                    clockModel.setSec = value;
+                    if (!(int.Parse(SetSec) > 60))
+                    {
+                        SetSecAngle = int.Parse(value) * 6;
+                    }
+                    OnPropertyChanged("SetSec");
                 }
-                OnPropertyChanged("SetSec"); 
+                catch { }
             }
         }
 
@@ -709,6 +725,8 @@ namespace VewModelSample.ViewModel
         }
 
         // 알람 추가 버튼
+        Thread alarmThread = null;
+        List<Thread> threadList = new List<Thread>();
         public ICommand AddAlarmConfirm => new RelayCommand<object>(addAlarmConfirm, null);
         private void addAlarmConfirm(object e)
         {
@@ -763,6 +781,21 @@ namespace VewModelSample.ViewModel
 
             DateTime timeToUse = new DateTime(year, month, day, hour, min, sec);
 
+            if(timeToUse < Standard)
+            {
+                MessageBox.Show("이미 지난 시간은 알람으로 설정할 수 없습니다.", "오류", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            for(int i=0; i<alarmDatas.Count; i++)
+            {
+                if (alarmDatas[i].targetTime.Equals(timeToUse.ToString(StandardChangeViewFormat))) 
+                {
+                    MessageBox.Show("이미 같은 시각으로 등록된 알람이 있습니다.", "오류", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+            }
+
             // log
 
             //Standard = timeToUse;
@@ -773,7 +806,7 @@ namespace VewModelSample.ViewModel
             AddData("SetAlarm", Standard.ToString(StandardChangeViewFormat), RecordText);
             AddAlarm(targetTime);
 
-            Thread alarmThread = new Thread(waitingAlarm);
+            alarmThread = new Thread(waitingAlarm);
             alarmThread.IsBackground = true;
             alarmThread.Name = (AlarmThreadSeq).ToString();
 
@@ -783,6 +816,8 @@ namespace VewModelSample.ViewModel
             arr[1] = timeToUse.ToString(StandardChangeViewFormat);
 
             alarmThread.Start(arr);
+
+            threadList.Add(alarmThread);
 
             MessageBox.Show("알람이 추가 되었습니다.", "성공", MessageBoxButton.OK, MessageBoxImage.Information);
         }
@@ -810,11 +845,27 @@ namespace VewModelSample.ViewModel
 
         private void removeRow(object parameter)
         {
-            int index = alarmDatas.IndexOf(parameter as alarmData);
-            if (index > -1 && index < alarmDatas.Count)
+            if(MessageBox.Show("선택한 알람을 삭제하시겠습니까?", "경고", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                alarmDatas.RemoveAt(index);
+                int index = AlarmSelectedIndex;
+                if (index > -1 && index < alarmDatas.Count)
+                {
+                    alarmDatas.RemoveAt(index);
+                    threadList[index].Abort();
+                    threadList.RemoveAt(index);
+                }
+                MessageBox.Show("선택한 알람을 삭제하였습니다.", "성공", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+            else
+            {
+                return;
+            }
+        }
+
+        public int AlarmSelectedIndex
+        {
+            get { return clockModel.alarmSelectedIndex; }
+            set { clockModel.alarmSelectedIndex = value; OnPropertyChanged("AlarmSelectedIndex"); }
         }
         #endregion
 

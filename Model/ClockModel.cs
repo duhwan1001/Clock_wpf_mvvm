@@ -104,6 +104,8 @@ namespace VewModelSample.Model
             public String targetTime { get; set; }
         }
 
+        public int alarmSelectedIndex;
+
         // StopWatch
         public String stopWatch = "00:00:00:00";
 

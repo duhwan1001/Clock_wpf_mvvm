@@ -39,7 +39,7 @@
             </StackPanel>
         </Grid>
         <Grid Grid.Column="1" Grid.RowSpan="4">
-            <DataGrid ItemsSource="{Binding Path=alarmDatas, Mode=TwoWay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGrid SelectedIndex="{Binding AlarmSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Path=alarmDatas, Mode=TwoWay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" AutoGenerateColumns="False" CanUserAddRows="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Sequence" MinWidth="10" Width="Auto" Binding="{Binding Path=alarmSequence}"></DataGridTextColumn>
                     <DataGridTextColumn Header="TargetTime" MinWidth="10" Width="Auto" Binding="{Binding Path=targetTime}"></DataGridTextColumn>
@@ -48,13 +48,13 @@
                             <DataTemplate>
                                 <Button Style="{DynamicResource buttonHover}" Content="Delete" 
                                         Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid},Mode=FindAncestor},Path=DataContext.RemoveRow}"
-                                        CommandParameter="{Binding AlarmSequence}"/>
+                                    />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-        </Grid>
+        </Grid> 
         <Grid Grid.Column="1" Grid.Row="5" Panel.ZIndex="1">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Button Style="{DynamicResource buttonHover}" Command="{Binding AddAlarmConfirm, UpdateSourceTrigger=PropertyChanged}" Content="알람 추가" HorizontalAlignment="Center" VerticalAlignment="Center" Width="113"/>
